@@ -8,6 +8,7 @@ const store = useStore();
 onMounted(() => store.dispatch('getDevices'))
 const textarea = ref(null)
 const state = reactive({
+            formstate:{},
             device:{ 
                 id: "",
                 model :"",
@@ -19,10 +20,14 @@ const state = reactive({
             }  
         })
 
-const getStockedDevices = computed(() => store.getters.getStockedDevices)
+const getDevices = computed(() => store.getters.getDevices)
 
 const v$ = useVuelidate(state)
 const result = v$.value.$validate()
+
+const reLoad = () => {
+            store.dispatch('getDevices');
+        }
 
 const onSubmitHandler = async () => {
             if(result){
@@ -35,14 +40,14 @@ const onSubmitHandler = async () => {
             }else{
                 console.log("error - form is not valid check inputs")
             }
-            store.dispatch('getDevices');
+            reLoad();
         }
 
 const deleteDevice = async () =>{
             if(result){
                 store.dispatch('deleteDevice', state.device);
-                store.dispatch('getDevices');
                 clearForm();
+                reLoad();
             }
         }  
 
@@ -71,9 +76,9 @@ const saveChanges = () => {
                 brand: state.device.brand,
                 specs: state.device.specs.trim()
             } 
-            store.dispatch('updateDevice', aDevice);
-            store.dispatch('getDevices');
             clearForm();    
+            store.dispatch('updateDevice', aDevice);
+            reLoad();
         }
 
 const addDevice = () =>{
@@ -86,7 +91,7 @@ const addDevice = () =>{
                 specs: state.device.specs.trim()
             } 
             store.dispatch('addDevice', aDevice);
-            store.dispatch('getDevices');
+            reLoad();
         }
 
 const clearForm = () =>{
@@ -105,7 +110,7 @@ const clearForm = () =>{
 
 <template>
         <div class="float-child-left">
-        <form @submit.prevent="onSubmitHandler">
+        <form :state="state.formstate" @submit.prevent="onSubmitHandler">
             <div class="login-container mb-1">
                 <div class="form-group">
                         <div class="intput-group mb-1">
@@ -189,7 +194,7 @@ const clearForm = () =>{
         </form>
     </div>
     <div class="float-child-right">
-            <div class="float-child-card" v-for="dev in getStockedDevices" :key='dev.id' > 
+            <div class="float-child-card" v-for="dev in getDevices" :key='dev.id' > 
                 <OneCard
                 button="Modify"
                 :model="dev.model"
@@ -199,6 +204,7 @@ const clearForm = () =>{
                 :stock="dev.stock"
                 :brand="dev.brand"
                 :specs="dev.specs"
+                :key="dev.id"
                 @getSelectedItem="getSelectedItem"
                 ></OneCard>
             </div>
