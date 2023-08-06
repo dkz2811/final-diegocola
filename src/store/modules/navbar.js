@@ -1,10 +1,10 @@
     const state = {
         navBar:[
-            {title:"Store",comp:"StoreComp", to:"/", visible:true},
-            {title:"Register",comp:"RegisterComp", to:"/register", visible:true},
-            {title:"Log In",comp: "LogInComp", to:"/log-in", visible:true},
-            {title:"Your Cart",comp: "CartComp", to: "/shopping-cart", value: 0, visible:true},
-            {title:"ProductMgmt", comp: "CrudProduct", to: "/product-mgmt", visible:false}
+            {title:"Store",comp:"StoreComp", to:"/final-diegocola/", visible:true},
+            {title:"Register",comp:"RegisterComp", to:"/final-diegocola/register", visible:true},
+            {title:"Log In",comp: "LogInComp", to:"/final-diegocola/log-in", visible:true},
+            {title:"Your Cart",comp: "CartComp", to: "/final-diegocola/shopping-cart", value: 0, visible:true},
+            {title:"ProductMgmt", comp: "CrudProduct", to: "/final-diegocola/product-mgmt", visible:false}
         ],
     }
     const getters = {
@@ -18,12 +18,12 @@
             state.navBar[3].value = 0;
             state.navBar[4].visible = false;
             state.navBar[2].title = "Log In";
-            state.navBar[2].to = "/log-in"; },
+            state.navBar[2].to = "/final-diegocola/log-in"; },
         setNavBar: (state, payload) => { 
             state.navBar[1].visible = false;
             payload.isAdmin ? state.navBar[4].visible = true : state.navBar[4].visible = false; 
             state.navBar[2].title = payload.name;
-            state.navBar[2].to = "/customer-page";
+            state.navBar[2].to = "/final-diegocola/customer-page";
         },
         setNavBarCart: (state, payload) => {
             state.navBar[3].value = payload;

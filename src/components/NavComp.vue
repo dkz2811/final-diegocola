@@ -2,11 +2,14 @@
 import ALabel from './ALabel.vue';
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 
         const userLogOut = () => {
             store.dispatch('userLogOut');
+            router.push('/final-diegocola/log-in');
         }
         const getNavBar = computed(() => store.getters.getNavBar);
         const isLogged = computed(() => store.getters.isLogged);
