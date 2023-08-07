@@ -3,10 +3,8 @@ import OneCard from './OneCard.vue';
 import {ref, computed, onMounted, reactive } from 'vue'
 import {useStore} from 'vuex'
 import {useVuelidate} from '@vuelidate/core'
-import { useRouter } from 'vue-router';
 
 const store = useStore();
-const router = useRouter();
 onMounted(() => store.dispatch('getDevices'))
 const textarea = ref(null)
 const state = reactive({
@@ -33,7 +31,6 @@ const reLoad = () => {
         }
 
 const onSubmitHandler = async () => {
-    console.log(isAdmin.value)
             if(result && isAdmin.value){
                 if(state.device.id !== ""){ 
                     saveChanges();
@@ -42,13 +39,7 @@ const onSubmitHandler = async () => {
                 }
                 clearForm();
             }else{
-                if(isAdmin.value){
                     console.log("error - form is not valid check inputs")
-                }
-                else{
-                    store.dispatch('logout')
-                    router.push('/final-diegocola/login');
-                }
             }
             reLoad();
         }
@@ -214,7 +205,6 @@ const clearForm = () =>{
                 :stock="dev.stock"
                 :brand="dev.brand"
                 :specs="dev.specs"
-                :key="dev.id"
                 @getSelectedItem="getSelectedItem"
                 ></OneCard>
             </div>

@@ -10,7 +10,6 @@ const emit = defineEmits(['getSelectedItem'])
         stock:Number,
         brand:String,
         specs: String,
-        key: Number
       })
       const SubmitEvent =()=>{    
           if(props.button === "Add to Cart")
@@ -35,7 +34,7 @@ const emit = defineEmits(['getSelectedItem'])
             }
           }
     </script>
-<template :key="props.key">
+<template>
   <div class="card mb-2">
     <div class="card-body" >
       <h5 class="card-title">{{ props.model }}</h5>
