@@ -77,7 +77,7 @@ const checkLogin =() => {
               class="form-control"
               id="password" 
               v-model="state.login.password"
-              autocomplete="Admin123"
+              autocomplete="Admin1234"
               required
               name="password">
             </div>
