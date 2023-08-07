@@ -44,7 +44,7 @@ const onSubmit = async () => {
 
 onUpdated(() => {
   if( loginSuccess.value && !isLoading.value && isRegistered.value){
-    isAdmin.value ? router.push('/product-mgmt') : router.push('/')
+    isAdmin.value ? router.push('/final-diegocola/product-mgmt') : router.push('/final-diegocola/')
       }
     })
 

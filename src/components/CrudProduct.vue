@@ -3,8 +3,10 @@ import OneCard from './OneCard.vue';
 import {ref, computed, onMounted, reactive } from 'vue'
 import {useStore} from 'vuex'
 import {useVuelidate} from '@vuelidate/core'
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 onMounted(() => store.dispatch('getDevices'))
 const textarea = ref(null)
 const state = reactive({
@@ -20,7 +22,8 @@ const state = reactive({
             }  
         })
 
-const getDevices = computed(() => store.getters.getDevices)
+const isAdmin = computed(() => store.getters.isAdmin)
+const getDevices = computed(() => store.getters.getStockedDevices)
 
 const v$ = useVuelidate(state)
 const result = v$.value.$validate()
@@ -30,7 +33,8 @@ const reLoad = () => {
         }
 
 const onSubmitHandler = async () => {
-            if(result){
+    console.log(isAdmin.value)
+            if(result && isAdmin.value){
                 if(state.device.id !== ""){ 
                     saveChanges();
                 }else if(state.device.id == ""){
@@ -38,13 +42,19 @@ const onSubmitHandler = async () => {
                 }
                 clearForm();
             }else{
-                console.log("error - form is not valid check inputs")
+                if(isAdmin.value){
+                    console.log("error - form is not valid check inputs")
+                }
+                else{
+                    store.dispatch('logout')
+                    router.push('/final-diegocola/login');
+                }
             }
             reLoad();
         }
 
 const deleteDevice = async () =>{
-            if(result){
+            if(result && isAdmin.value ){
                 store.dispatch('deleteDevice', state.device);
                 clearForm();
                 reLoad();

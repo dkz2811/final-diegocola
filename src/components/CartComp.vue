@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'    
+import { useRouter } from 'vue-router'
 
 const router = useRouter();
 const store = useStore();
@@ -19,7 +19,7 @@ const checkOut = () =>{
         store.dispatch('checkOut')
     }else{
         alert("You must be logged in to check out")
-            router.push('/log-in')
+            router.push('/final-diegocola/log-in')
         }
     }
 }
@@ -47,7 +47,7 @@ const checkOut = () =>{
                                         <div class="list-group-item"><span>Your total: ${{ getShoppingListTotal }}</span></div>
                                     </div>
                                     <div>
-                                        <button type="button"
+                                    <button type="button"
                                         class="btn btn-success mt-3"
                                         data-toggle="modal"
                                         data-target=".bd-example-modal-lg"

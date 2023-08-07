@@ -14,6 +14,7 @@
         setStockedDevices: (state, payload) => { state.stockedDevices = payload },
         updateStockDown: (state, payload) => {state.stockedDevices.some( device => { if( device.id === payload.id ){ device.stock -= 1; }})},    
         updateStockUp: (state, payload) => {state.stockedDevices.some( device => { if( device.id === payload.id ){ device.stock += 1; }})},
+        deleteDevice: (state, payload) => {state.stockedDevices.some( device => { if( device.id === payload.id ){ device.stock = 0; }})},
     }
     const actions = {  
         getDevices: (context) => {
@@ -77,6 +78,7 @@
             })
             .then(res => res.json())
             .catch(error => console.log(error))
+            context.commit("deleteDevice", payload)
             context.dispatch('reloadDevices')
         },
         updateDevice: (context, payload) => {   
